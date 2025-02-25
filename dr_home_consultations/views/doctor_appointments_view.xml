@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Tree (List) View for Doctor Appointments -->
+  <record id="view_doctor_appointments_list" model="ir.ui.view">
+    <field name="name">doctor.appointments.list</field>
+    <field name="model">doctor.appointments</field>
+    <field name="arch" type="xml">
+      <list string="Doctor Appointments">
+        <field name="name" width="50"/>
+        <field name="reference_id" width="50"/>
+        <field name="diagnosis" width="50"/>
+        <field name="investigations" width="50"/>
+        <field name="others" width="50"/>
+        <field name="panchakarma_advice" width="50" optional="hide"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Form View for Doctor Appointments with Notebook Tabs -->
+  <record id="view_doctor_appointments_form" model="ir.ui.view">
+    <field name="name">doctor.appointments.form</field>
+    <field name="model">doctor.appointments</field>
+    <field name="arch" type="xml">
+      <form string="Doctor Appointments">
+        <sheet>
+          <!-- Main Data Groups -->
+          <group>
+            <group>
+              <div style="color: red; font-weight: bold;">Appointment Name</div>
+              <field name="name" placeholder="Enter Appointment Name" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Chief Complaint</div>
+              <field name="chief_complaint" placeholder="Enter Chief Complaint" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Associated Complaint</div>
+              <field name="associated_complaint" placeholder="Enter Associated Complaint" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Past History</div>
+              <field name="past_history" placeholder="Enter Past History" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Family History</div>
+              <field name="family_history" placeholder="Enter Family History" nolabel="1"/>
+            </group>
+            <group>
+              <div style="color: red; font-weight: bold;">Present History</div>
+              <field name="present_history" placeholder="Enter Present History" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Diagnosis</div>
+              <field name="diagnosis" placeholder="Enter Diagnosis" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Investigations</div>
+              <field name="investigations" placeholder="Enter Investigations" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Other Information</div>
+              <field name="others" placeholder="Enter Other Information" nolabel="1"/>
+            </group>
+          </group>
+          <group>
+            <group>
+              <div style="color: red; font-weight: bold;">ARTAVA</div>
+              <field name="artava" placeholder="Enter ARTAVA" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">NADI</div>
+              <field name="nadi" placeholder="Enter NADI" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">AGNI</div>
+              <field name="agni" placeholder="Enter AGNI" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">MALA</div>
+              <field name="mala" placeholder="Enter MALA" nolabel="1"/>
+            </group>
+            <group>
+              <div style="color: red; font-weight: bold;">MUTRA</div>
+              <field name="mutra" placeholder="Enter MUTRA" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">NIDRA</div>
+              <field name="nidra" placeholder="Enter NIDRA" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">MANAS</div>
+              <field name="manas" placeholder="Enter MANAS" nolabel="1"/>
+              <div style="color: red; font-weight: bold;">Panchakarma Advice</div>
+              <field name="panchakarma_advice" placeholder="Enter Panchakarma Advice" nolabel="1"/>
+            </group>
+          </group>
+          <notebook>
+            <!-- VITALS Tab -->
+            <page string="VITALS">
+              <div style="color: darkblue; font-weight: bold; font-size:16px; margin-bottom:10px;">
+                VITALS
+              </div>
+              <group>
+                <div style="color: red; font-weight: bold;">HTN</div>
+                <field name="htn" placeholder="Enter HTN" nolabel="1"/>
+                <div style="color: red; font-weight: bold;">DM</div>
+                <field name="dm" placeholder="Enter DM" nolabel="1"/>
+                <div style="color: red; font-weight: bold;">TH</div>
+                <field name="th" placeholder="Enter TH" nolabel="1"/>
+              </group>
+            </page>
+            <!-- PRESCRIBED Tab -->
+            <page string="PRESCRIBED">
+              <div style="color: darkblue; font-weight: bold; font-size:16px; margin-bottom:10px;">
+                PRESCRIBED
+              </div>
+              <!-- One2many field for Medicine Lines -->
+              <field name="medicine_line_ids" nolabel="1">
+                <list editable="bottom">
+                  <field name="medicine_id"/>
+                  <field name="dosage_id"/>
+                  <field name="days"/>
+                  <field name="course"/>
+                  <field name="quantity"/>
+                </list>
+                <form string="Medicine Line">
+                  <group>
+                    <field name="medicine_id"/>
+                    <field name="dosage_id"/>
+                  </group>
+                  <group>
+                    <field name="days"/>
+                    <field name="course"/>
+                    <field name="quantity"/>
+                  </group>
+                </form>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_doctor_appointments" model="ir.actions.act_window">
+    <field name="name">Doctor Appointments</field>
+    <field name="res_model">doctor.appointments</field>
+    <field name="view_mode">list,form</field>
+    <field name="context">{}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">No Appointments Found!</p>
+    </field>
+  </record>
+
+  <menuitem id="menu_doctor_home_root" name="Doctor Home" sequence="10"/>
+  <menuitem id="menu_doctor_appointments" name="Doctor Appointments" parent="menu_doctor_home_root"
+            action="action_doctor_appointments" sequence="1"/>
+</odoo>
